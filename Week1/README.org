@@ -1,0 +1,133 @@
+Started by listening to the 2023 introduction: https://www.youtube.com/watch?v=-zpVha7bw5A
+
+All material for Week #1 is at:
+https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_1_basics_n_setup
+
+Introduction video skipped (basically same as 2023):
+https://www.youtube.com/watch?v=bkJZDmreIpA&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb
+
++ Docker + Progress
+
+  + (1.2.1) Intro to Docker. I can definitely go through this very fast.
+    https://www.youtube.com/watch?v=EYNwNlOrpr0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb
+
+  + (1.2.2) Ingesting NY Taxi Data to Postgres
+    https://www.youtube.com/watch?v=2JM-ziJt0WI&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb
+
+    + get postgreSQL running by ./start_postgres.sh
+    + inside de_zoomcamp conda environment:
+      + pip install pgcli
+    + connect to PostgreSQL by ./pgcli.sh (pass for root is root, see
+      start_postgres.sh)
+
+    + open jupyterlab with de_zoomcamp as workspace and as kernel de_zoomcamp
+      + work on upload_data.ipynb to upload the data to postgresql. 
+
+  + (1.2.2b) there is an optional video on using SQL to Pandas in the jupyter
+    notebook, but I'm OK with pgcli)
+
+  + (1.2.3) Connecting pgAdmin and Postgres
+    + pgAdmin reminds me of phpmyadmin. In this video he shows how to
+      manually create a network to use with Docker.
+      docker network -h
+
+      we will run pgAdmin inside a docker container, the Postgres database in
+      another one, and connect both with the docker network.
+      to run pgadmin: ./start_pgadmin.sh
+
+      to create the network
+        docker network create pg-network
+        and then we specify the network in start_postgres.sh as 
+          --network=pg-network 
+          --name=pg-database    (container name)
+        and in start_pgadmin.sh as
+          --network=pg-network 
+      then it is a matter of going to localhost:8080
+
+  + (1.2.4) Putting the ingestion script into Docker
+    basically he shows the code in ingest_data.py, which goes together with the
+    file Dockerfile in order to do the data ingestion in a script instead of in
+    the notebook. 
+    I run it as ./ingest.sh without problems (remember to "drop table
+    yellow_taxi_data" before running this, so we don't keep appending)
+
+    To Dockerize the ingestion, we are going to use the script above. The
+    Dockerfile gives the description for the Docker container, and we would just
+    do:
+    + docker build -t taxi_ingest:v001 .  (run it inside Docker_Taxi, otherwise
+      I get error checking context due to ny_taxi_progress_data having root
+      ownership) 
+    + and run it with ./ingest-docker.sh, but it will fail unless we first get a
+      docker network up and running (which was explained in the previous video!)
+
+    *ISSUES*:
+      + make sure the name of the container separates the options to docker from
+        the options to the script (i.e. if you put --network after
+        taxi_ingest:v001 there will be trouble, because the network argument will
+        be parsed by the script inside the container and not by docker itself.
+      + if you restart pgadmin and have CSRF errors, make sure you close the tab
+        to pgadmin in the browser and do it again.
+
+  + (1.2.5) Postgres and pgAdmin with Docker-Compose
+    definition file is docker-compose.yaml
+    
+    to run it:
+      docker-compose up (-d for detached)
+        (the docker-compose.yaml includes names for each of the containers, that
+         we will use when using the pgadmin UI)
+      Ctrl-C (or docker-compose down) to stop it
+
+  + (1.2.6) SQL Refresher
+    wget https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv
+    I add the injection in the upload_data.ipynb
+
+    basic SQL commands. Will need to get some practice with this.
+
++ GCP + Terraform
+
+  + (1.1.1) Introduction to GCP
+    Basically an alternative to AWS?
+
+  + (1.3.1) Introduction to Terraform Concepts & GCP Pre-requisites
+    Terraform, OpenSource tool for provisioning infrastructure (file-versioning
+    like). Installed pacman -S terraform
+
+    GCP similar to AWS. Will need to open an account.
+      set up with angel.vicente.garrido@gmail.com
+
+      I create a service account and got the .json key, which I put in
+      GCP-keys. 
+
+      To interact with GCP, I install google-cloud-sdk from AUR. 
+      To refresh token and verify authentication:
+        export GOOGLE_APPLICATION_CREDENTIALS="/home/angelv/Learning/DE-Zoomcamp_2023/GCP-keys/de-zoomcamp-375218-5ae85fadc034.json"
+        gcloud auth application-default login
+      
+      I follow the steps, and I have the feeling that things are OK, though I
+    don't get to the same page as in the video, but I don't get errors either.   
+    
+    So, first thing is we are going to create infrastructure (GCS and BigQuery)
+    with Terraform. 
+    + Add permissions to the GCP service account created above: storage admin
+      and storage object admin
+
+    + Then I enable (https://console.cloud.google.com/apis/library?authuser=2&project=de-zoomcamp-375218) 
+      Identity and Access Management (IAM) API 
+      IAM Service Account Credentials API
+
+  + (1.3.2) Creating GCP Infrastructure with Terraform
+    Finally got to try Terraform
+      (I do it in Terraform+GCP/terraform)
+    terraform init
+    terraform plan
+    terraform apply
+    terraform destroy
+
++ Setting up the Environment on Google Cloud (CloudVM + SSH access)
+
+  + (1.4.1) I skip this one for the time being, since I have a perfect local
+    working environment in sieladon
+
+
+
+

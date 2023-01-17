@@ -1,0 +1,10 @@
+*~
+/Week1/.ipynb_checkpoints/
+/Week1/Homework/.ipynb_checkpoints/
+/Week1/output.csv.gz
+/Week1/Terraform+GCP/terraform/.terraform.lock.hcl
+/Week1/Terraform+GCP/terraform/.terraform/
+/Week1/Terraform+GCP/terraform/terraform.tfstate
+/Week1/Terraform+GCP/terraform/terraform.tfstate.backup
+/Week1/yellow_tripdata_2021-01.csv
+/Week1/Homework/green_tripdata_2019-01.csv
