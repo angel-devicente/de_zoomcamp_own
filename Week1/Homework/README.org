@@ -47,7 +47,7 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
   --> 2019-01-15
   #+end_example
-
+  
 + Question 5
 
   #+begin_example

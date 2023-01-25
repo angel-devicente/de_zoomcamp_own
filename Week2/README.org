@@ -1,0 +1,54 @@
+All material for Week #1 is at:
+https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_workflow_orchestration
+
++ (2.1.1) Data Lake (GCS)
+  https://www.youtube.com/watch?v=W3Zm6rjOq70&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb
+
+  Data Lake vs Data Warehouse
+  
+  Basically very large unstructured data storage vs smaller structured data storage.
+
+  ETL vs ELT
+  Export Transform Load vs Export Load Transform
+ 
+  ETL for small amount of data vs ELT for large amounts of data (i.e. Data Lake
+  solution)
+
+  Dangers of data lakes: 
+   converts easily to data swamp
+   no versioning
+   incompatible schemas for same datab without versioning
+   no metadata associated
+   joins not possible
+
++ (2.2.1) Introduction to Workflow orchestration
+  https://www.youtube.com/watch?v=8oLs6pzHp68&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=17
+  
+  High-level intro to workflow orchestration. The action will start in next video.
+
++ (2.2.2) Introduction to Prefect concepts
+  https://www.youtube.com/watch?v=jAwRCyGLKOY&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=18
+
+  Here we are going to use the taxi data (as did in previous lesson, with Panda
+  and PostgreSQL), but then use Prefect for workflow orchestration.
+
+  Sample code for the rest of the week is clone in =prefect-zoomcamp=
+
+
+
++ (2.2.3) ETL with GCP & Prefect
+  https://www.youtube.com/watch?v=W-rMz_2GwqQ&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=19
+
++ (2.2.4) From Google Cloud Storage to Big Query
+  https://www.youtube.com/watch?v=Cx5jt-V5sgE&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=20
+
++ (2.2.5) Parametrizing Flow & Deployments
+  https://www.youtube.com/watch?v=QrDxPjX10iw&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=21
+
++ (2.2.6) Schedules & Docker Storage with Infrastructure
+  https://www.youtube.com/watch?v=psNSzqTsi-s&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=22
+
++ (2.2.7) Prefect Cloud and Additional Resources
+  https://www.youtube.com/watch?v=gGC23ZK7lr8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=23
+
+
