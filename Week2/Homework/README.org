@@ -1,0 +1,30 @@
+Homework at
+https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2023/week_2_workflow_orchestration/homework.md
+
++ Question 1
+
+  python etl_web_to_gcs.py
+
+  [...]
+  01:07:54.432 | INFO    | Task run 'clean-b9fd7e03-0' - rows: 447770
+  [...]
+
+  -> 447770
+
++ Question 2
+
+  the arguments for a cron job are: Min Hour Mday Month Wday Command
+  so the first day of every mont at 5AM is:
+  
+  -> 0 5 1 * *
+
++ Question 3
+
+  CONTINUE HERE
+
++ Question 4
+
++ Question 5
+
++ Question 6
+

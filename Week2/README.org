@@ -27,20 +27,89 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_work
   High-level intro to workflow orchestration. The action will start in next video.
 
 + (2.2.2) Introduction to Prefect concepts
-  https://www.youtube.com/watch?v=jAwRCyGLKOY&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=18
+  (OLD) https://www.youtube.com/watch?v=jAwRCyGLKOY&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=18
+
+  replaced by https://www.youtube.com/watch?v=cdtN6dhp708
 
   Here we are going to use the taxi data (as did in previous lesson, with Panda
   and PostgreSQL), but then use Prefect for workflow orchestration.
 
   Sample code for the rest of the week is clone in =prefect-zoomcamp=
 
+  I keep using the de_zoomcamp conda environment I used for the first week.
 
+  I install requirements, etc. with:
 
+  pip install prefect -U
+  pip install prefect-sqlalchemy  prefect-gcp[cloud_storage] protobuf pyarrow
+              pandas-gbq psycopg2-binary
+
+  I copy ingest_data.py and modify it to my needs. To test it, remember to start
+  the docker services (go to Week1 folder and run "docker-compose up". In
+  another terminal run also from Week 1, ./pgcli.sh to query the database). In a
+  third terminal run python ingest_data.py and I can see the table data replaced
+  in the table.
+
+  Next we go to ingest_data_flow.py, which will use prefect, and for that we
+  also need to create blocks (to handle credentials) .
+  The video explains the reasoning to get to ingest_data_flow.py, doing the
+  changes step by step.
+
+  The load_data function requires prefect blocks. To access the Prefect UI
+  (Orion) just run "prefect orion start" and then going to localhost:4200
+
+  First time only? run "prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api"
+
+  Time to add a block. We need to create one for Postgres, so in Blocks we go to
+  SQLAlchemyconnector. We select SyncDriver and postgresql+psycopg2, then the
+  rest of values, we take them from ingest_data.py
+   
+  Now we can run python ingest_data_flow.py no problem. This adds table
+  "yellow_trips" to ny_taxi DB (only 98027 rows, while yellow_taxi_trips has
+  1369765 rows).  This is normal, since we only do one chunk and we remove trips
+  where there were 0 passengers.
+
+  
 + (2.2.3) ETL with GCP & Prefect
   https://www.youtube.com/watch?v=W-rMz_2GwqQ&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=19
 
-+ (2.2.4) From Google Cloud Storage to Big Query
+  Here we are going to see how to do ETL with GCP + Prefect
+  see prefect-zoomcamp/flows/02_gcp
+
+  A lot of repetition from 2.2.2. Basically getting a file from the web and
+  uploading it to GCP Bucket storage using prefect.
+
+  I copy here etl_web_to_gcs.py (from prefect-zoomcamp/flows/02_gcp)
+
+  Nothing especially interesting until he starts discussing function
+  "write_cgs", where we deal with the blocks, credentials, GCP.
+
+  GCS: cloud.google.com  (remember I do it with angel.vicente.garrido@gmail.com)
+  I created a project named "de-zoomcamp" in Week1. Here I create a bucket,
+  named "de-zoomcamp-gcs" (go  to CloudStorage -> Bucket -> create), and leave
+  everything to defaults.
+  In Orion UI I go to blocks and I can see that GCS Bucket and GCP credentials
+  are already there, so I don't think I need to do "prefect block register -m
+  prefect_gcp", but I do it just in case.
+
+   
+  Starting in minute 25 he talks about creating a GCS Bucket block, using a GCP
+  credential block, which requires a service account in GCP with the right
+  permissions, and a key in .json format (which I already downloaded in week 1
+  to directory GCP-keys). I copy&paste the .json contents when creating the GCP
+  credentials block and all is good. when running "python etl_web_to_gcs.py". 
+
+
+  CONTINUE: Homework Q1
+
+
++ (2.2.4) From Google Cloud Storage to Big Query (TO DO)
   https://www.youtube.com/watch?v=Cx5jt-V5sgE&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=20
+
+  Continuation of 2.2.2, where we will move data from GCS to Big Query (from
+  data lake to data warehouse)
+
+  see etl_gcs_to_bq.py (in prefect-zoomcamp/flows/02_gcp)
 
 + (2.2.5) Parametrizing Flow & Deployments
   https://www.youtube.com/watch?v=QrDxPjX10iw&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=21
