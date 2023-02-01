@@ -174,9 +174,65 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_work
 + (2.2.6) Schedules & Docker Storage with Infrastructure
   https://www.youtube.com/watch?v=psNSzqTsi-s&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=22
 
-  CONTINUE HERE
+  Scheduling (in Oring UI -> Deployment -> Details -> Schedule)
+
+  I can also create schedule when building the deployment, adding  something
+  like: --cron "0 0 * * *" to the prefect build command.
+
+  With --set-schedule, we can also modify the schedule for a previously created
+  deployment. 
+
+  [for deployments to run, remember that an agent has to be running, either
+  locally or in the cloud, likely what we see in 2.2.7]
+
+
+   Running flows in Docker containers
+   ----------------------------------
+
+   The idea here is where are we going to store our flow code. Until now we had
+   it local, but we could put the code in GitHub, AWS S3, etc. but also on a
+   docker container image and stored it in Docker Hub. We will see that here.
+
+   To build the Docker image, I copy here Dockerfile and docker-requirements.txt
+   (from prefect-zoomcamp)
+
+   Let's build the Docker image:
+     docker image build -t angeldevicente/de-zoomcamp-prefect:v1 .
+
+   To push it to Docker Hub:
+     docker login
+     docker push angeldevicente/de-zoomcamp-prefect:v1
+
+   Then we need to create a Docker container block, like we did earlier for GCP
+   Buckets, etc. We can do it in the UI, but also programatically. I copy
+   make_docker_block.py from prefect-zoomcamp/blocks and modify to suit my
+   stuff. My block name is "docker-de-zoomcamp".
+
+   Let's now make a deployment with this Docker image (but instead of building
+   the deployment via the CLI, let's do it with a script). We use
+   docker_deploy.py, which I copy from prefect-zoomcamp/flows/03_deployments
+
+
+   prefect profile ls (to see that we are indeed in default profile)
+   I run again (probably don't need it) 
+      "prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api"   
+
+   We start the agent:
+     prefect agent start -q 'default'
+
+   And run the flow from the CLI:
+     prefect deployment run etl-parent-flow/docker-flow
+
+   In the terminal with the agent I can see that the flow runs without problems.
+
+   (I put in docker parameterized_flow_docker.py and not parameterized_flow.py,
+   since the last one was using the cache option, and that was giving me trouble
+   (I should mount directories to indicate where to do the caching, etc. so for
+   the moment I just avoid caching and it works fine.
 
 + (2.2.7) Prefect Cloud and Additional Resources
   https://www.youtube.com/watch?v=gGC23ZK7lr8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=23
+
+  3 minutes quickie
 
 
