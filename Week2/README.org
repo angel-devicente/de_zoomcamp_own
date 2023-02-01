@@ -136,8 +136,45 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_work
 + (2.2.5) Parametrizing Flow & Deployments
   https://www.youtube.com/watch?v=QrDxPjX10iw&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=21
 
+  we are using parameterized_flow.py (which I copy from prefect-zoomcamp/flows/03_deployments)
+    which builds upon etl_web_to_gcs.py
+
+    The first part (up.to minute 07:00 is very easy, since it only deals with
+  parameterization, which is very simple, just adding parents-children flow
+  structure).
+
+  The caching of data in function fetch is really useful, so we don't download
+  the data over and over again.
+
+
+  Deployment (server side concept)
+
+  prefect deployment build ./parameterized_flow.py:etl_parent_flow -n "Parameterized ETL"
+
+  We can adjust the parameters here or in the UI after we apply but let’s just do it here:
+   - edit yaml with parameters: { "color": "yellow", "months" :[1, 2, 3], "year": 2021}
+
+  Now we need to apply the deployment: `prefect deployment apply etl_parent_flow-deployment.yaml`
+
+  After applying we get the message:
+  View Deployment in UI: http://127.0.0.1:4200/deployments/deployment/09fc33a2-0eb4-4667-b794-cba7916b377a
+
+  To execute flow runs from this deployment, start an agent that pulls work from the 'default' work queue:
+  $ prefect agent start -q 'default'
+
+  In the UI, we can select a "Quick Run" for this deployment, which will put
+  this flow in the default queue, and the agent we just launched will take care
+  of that queue and we see how the flow is being executed. 
+
+  Last thing is that we can add notifications at the Orion UI to get
+  notifications for different states in our flow (crashed, succeeded, etc.). We
+  can add notifications for Slack, etc, but not sure how to send a simple
+  e-mail.
+
 + (2.2.6) Schedules & Docker Storage with Infrastructure
   https://www.youtube.com/watch?v=psNSzqTsi-s&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=22
+
+  CONTINUE HERE
 
 + (2.2.7) Prefect Cloud and Additional Resources
   https://www.youtube.com/watch?v=gGC23ZK7lr8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=23

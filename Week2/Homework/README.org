@@ -25,14 +25,28 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
      python etl_web_to_gcs_Q3.py 
    which downloads it locally and uploads the data to GCS Bucket
 
-  python etl_gcs_to_bq.py
+  The code is in etl_gcs_to_bq.py
+  To create the deployment:
+    prefect deployment build ./etl_gcs_to_bq.py:etl_gcs_to_bq -n "Homework Q3"
+  Edit etl_gcs_to_bq-deployment.yaml, so tha parameters is:
+  parameters: {'sets': [{'color': "yellow", 'year': 2019,'month': 2},
+                      {'color': "yellow", 'year': 2019,'month': 3}]}
+  Apply the deployment by doing:
+    prefect deployment apply etl_gcs_to_bq-deployment.yaml
+
+  Start the agent with 
+    prefect agent start -q 'default'
+
+  In the Orion UI, go to the newly created deployment (Homework Q3) and click on
+  Quick Run.
+
+  We see that the agent starts logging information about the different flows,
+  and towards the end we get the line:
+
+   11:31:36.276 | INFO    | Flow run 'sparkling-mamba' - Total rows added: 14851920
 
   -> 14,851,920
   
-  (So far I don't understand what this mean, probably explained in next videos:
-   "Create a deployment for this flow to run in a local subprocess with local flow code storage (the defaults)")
-
-
 + Question 4
 
 + Question 5

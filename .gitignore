@@ -11,3 +11,5 @@
 /Week2/data/
 /Week2/yellow_tripdata_2021-01.csv.gz
 /Week2/Homework/data/
+/Week2/Homework/__pycache__/
+/Week2/__pycache__/
