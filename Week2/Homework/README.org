@@ -20,7 +20,18 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
 + Question 3
 
-  CONTINUE HERE
+  First we need to upload yellow taxi data for 2019/02 and 2019/03 to GCS.
+  For that, after creating the data/yellow directory we run:
+     python etl_web_to_gcs_Q3.py 
+   which downloads it locally and uploads the data to GCS Bucket
+
+  python etl_gcs_to_bq.py
+
+  -> 14,851,920
+  
+  (So far I don't understand what this mean, probably explained in next videos:
+   "Create a deployment for this flow to run in a local subprocess with local flow code storage (the defaults)")
+
 
 + Question 4
 

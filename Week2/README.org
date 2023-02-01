@@ -100,16 +100,38 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_work
   credentials block and all is good. when running "python etl_web_to_gcs.py". 
 
 
-  CONTINUE: Homework Q1
-
-
-+ (2.2.4) From Google Cloud Storage to Big Query (TO DO)
++ (2.2.4) From Google Cloud Storage to Big Query 
   https://www.youtube.com/watch?v=Cx5jt-V5sgE&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=20
 
-  Continuation of 2.2.2, where we will move data from GCS to Big Query (from
+  Continuation of 2.2.3, where we will move data from GCS to Big Query (from
   data lake to data warehouse)
 
-  see etl_gcs_to_bq.py (in prefect-zoomcamp/flows/02_gcp)
+  I copy here etl_gcs_to_bq.py (from prefect-zoomcamp/flows/02_gcp)
+
+  Functions extract_from_gcs and transform are trivial after having done section
+  2.2.3
+
+  The interesting one is write_bq, where we are going to save the data to a Data
+  Warehouse (Big Query) in GCP. 
+
+  We use GCPCredentials block which we created with the Orion Prefect UI in the
+  previous steps (prefect orion start -> localhost:4200)
+
+  We need (in GCP) to add data to BigQuery (ADD DATA -> Google Cloud Storage (we
+  already saved it there in 2.2.3), browse and choose the .parquet file of
+  interest: yellow_tripdata_2021-01.parquet). Project is already populated for
+  us, and we have to create a DataSet, I call mine de_zoomcamp, in Table I
+  choose "rides" -> CREATE TABLE
+
+  To practice with the script, we can delete the data with:
+  DELETE FROM `de-zoomcamp-375218.de_zoomcamp.rides` where true
+
+  We need to fill in information about:
+  + destination_table:  de_zoomcamp.rides
+  + project_id: de-zoomcamp-375218
+
+  With that the script works without troubles (I modified slightly the paths for
+  local storage)  
 
 + (2.2.5) Parametrizing Flow & Deployments
   https://www.youtube.com/watch?v=QrDxPjX10iw&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=21

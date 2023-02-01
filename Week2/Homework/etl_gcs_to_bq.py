@@ -18,9 +18,6 @@ def extract_from_gcs(color: str, year: int, month: int) -> Path:
 def transform(path: Path) -> pd.DataFrame:
     """Data cleaning example"""
     df = pd.read_parquet(path)
-    print(f"pre: missing passenger count: {df['passenger_count'].isna().sum()}")
-    df["passenger_count"].fillna(0, inplace=True)
-    print(f"post: missing passenger count: {df['passenger_count'].isna().sum()}")
     return df
 
 
@@ -39,17 +36,20 @@ def write_bq(df: pd.DataFrame) -> None:
     )
 
 
-@flow()
-def etl_gcs_to_bq():
+@flow(log_prints=True)
+def etl_gcs_to_bq(sets) -> None:
     """Main ETL flow to load data into Big Query"""
-    color = "yellow"
-    year = 2021
-    month = 1
 
-    path = extract_from_gcs(color, year, month)
-    df = transform(path)
-    write_bq(df)
+    tot_rows = 0
+    
+    for set in sets:
+        path = extract_from_gcs(set['color'], set['year'], set['month'])
+        df = transform(path)
+        tot_rows += len(df)
+        write_bq(df)
 
+    print(f"Total rows added: {tot_rows}")
 
 if __name__ == "__main__":
-    etl_gcs_to_bq()
+    etl_gcs_to_bq([{'color': "yellow", 'year': 2019,'month': 2},
+                   {'color': "yellow", 'year': 2019,'month': 3}])
