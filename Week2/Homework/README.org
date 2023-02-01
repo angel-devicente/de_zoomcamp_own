@@ -49,6 +49,10 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
   
 + Question 4
 
+  I create a github block (github-de-zoomcamp-block) pointing to my repository:
+  https://github.com/angel-devicente/de_zoomcamp_own
+
+
 + Question 5
 
 + Question 6
