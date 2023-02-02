@@ -123,3 +123,10 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
 + Question 6
 
+  This one is trivial. Go to Blocks -> Secret, give it a name, intorudce a
+  10-digit number and the block page shows:
+
+  Value
+  ********
+  
+  --> 8
