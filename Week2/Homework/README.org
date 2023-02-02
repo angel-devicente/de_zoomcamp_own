@@ -117,9 +117,9 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
   | Flow run ID: 874acc65-49bd-4b90-b3f5-3095eb71bf62
   `----
 
-  and the log says that xxx rows were processed.
+  and the log says that 514392 rows were processed.
 
-
+  --> 514,392
 
 + Question 6
 
