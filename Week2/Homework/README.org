@@ -62,6 +62,12 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
   python github_deploy.py
 
+  Alternatively, we could also create the deployment from the command line (from
+  the main repo directory): 
+   prefect deployment build ./Week2/Homework/etl_web_to_gcs_Q4.py:etl_web_to_gcs
+   -n github-example -sb github/github-de-zoomcamp-block -q default -o
+   github-deployment.yaml 
+
   Start the agent with 
 
   prefect agent start -q 'default'
@@ -79,6 +85,41 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/202
 
 
 + Question 5
+
+  I use app.prefect.cloud
+
+  I recreate the blocks: 
+    GitHub
+    GCP Credentials
+    GCS Bucket (this one I cannot create with the UI for some reason, so I
+      create it programatically with the file "create_bucket_prefect_cloud.py"
+
+  I create the deployment by running python github_deploy_Q5.py (which will use
+  the flow in etl_web_to_gcs_Q5.py, modified to use data from April 2019)
+
+  I create a E-mail block to my mail address, and with it an automation for the
+  etl-web-to-gcs flow when completed.
+
+  I start the agent: 
+    prefect agent start -q 'default'
+
+  and go for a quick run with:
+    prefect deployment run etl-web-to-gcs/github-example
+
+  And I get the e-mail just fine
+
+  ,----
+  | Prefect <no-reply@prefect.io>
+  | 
+  | to angel.de.vicente
+  | Flow run etl-web-to-gcs/mature-tuatara entered state `Completed` at 2023-02-02T10:08:56.827824+00:00.
+  | Flow ID: fd2282f8-63f7-451c-8f38-28c9b206a87f
+  | Flow run ID: 874acc65-49bd-4b90-b3f5-3095eb71bf62
+  `----
+
+  and the log says that xxx rows were processed.
+
+
 
 + Question 6
 

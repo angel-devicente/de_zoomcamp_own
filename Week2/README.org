@@ -233,6 +233,50 @@ https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_work
 + (2.2.7) Prefect Cloud and Additional Resources
   https://www.youtube.com/watch?v=gGC23ZK7lr8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=23
 
-  3 minutes quickie
+  documentation: docs.prefect.io
+  Prefect Cloud: app.prefect.cloud
+     better than running Orion locally (with automations, etc.)
+  https://github.com/anna-geller
+  discourse.prefect.io  (which points to Slack, twitter, etc..)
+
+
+  I register at app.prefect.cloud and generate a workspace de-zoomcamp (owner is
+  angeldevicenteiaces). 
+
+  I stop orion, as we are going to be using Prefect Cloud now. In Prefect Cloud
+  in my profile I generate an API key, and in sieladon I run 
+  prefect cloud login -k pnu_xxxxx with the command they provide me to
+  authenticate in Prefect Cloud with the default profile.
+
+  To deploy with PrefectCloud, I can use again python github_depoy.py, but I
+  will need to recreate the blocks I did locally:
+    + github-de-zoomcamp-block, pointing to
+      https://github.com/angel-devicente/de_zoomcamp_own
+
+  (after login to prefectcloud it looks like the default profile gets updated in
+  a way that I cannot connect to both the local orion and PrefectCloud, which
+  makes sense really. If I want to be able to connect to the local Orion again,
+  do:
+
+  prefect profile create prefect_cloud
+  prefect profile use prefect_cloud
+  prefect cloud login -k ...
+
+  prefect profile create local
+  prefect profile use local
+  prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+
+  (use prefect_cloud profile to interact with prefect.cloud and local to
+  interact with orion)
+
+  There is no GCS Bucket block, so I need to:
+    prefect block register -m prefect_gcp (which adds GCS Bucket and GCP
+    Credentials, among others)
+
+  I recreate first GCP Credentials but when I want to recreate GCP Bucket there
+  seems to be a problem: I don't see the option to include the credential.
+
+
+
 
 
