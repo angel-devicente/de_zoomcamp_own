@@ -1,0 +1,81 @@
+All materials for Week #3 are at:
+https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_3_data_warehouse
+
++ 3.1.1 Data Warehouse and BigQuery
+  https://www.youtube.com/watch?v=jrHljAoD6nM&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=25
+
+  OLAP vs OLTP
+  On-line Analytical Processing vs On-line Transaction Processing
+
+  Data warehouse is an OLAP solution, used for reporting and data analysis
+
+  BigQuery is a serverless data warehouse
+
+  BigQuery Cost
+   On demand pricing
+    1TB of processed data is $5
+   Flat rate pricing
+
+  We can use external tables (i.e. the data coming, for example from a GS Bucket).
+
+  See example queries for this part in file big_query.sql of
+  dezoomcamp-code/week_3_data_warehouse
+
+  What is partitioning? For example creating sub-tables by the date, so queries
+  that filter by date will be much faster.
+
+  Clustering
+    Clustering for example by Tag
+
++ 3.1.2 Partitioning and Clustering
+  https://www.youtube.com/watch?v=-CqXf7vhhDs&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=26
+
+  Just more details about partitioning and clustering
+
+  Automatic reclustering can be very useful as new data is added.
+  It is done in the background, no user intervention needed.
+
++ 3.2.1 BigQuery Best Practices
+  https://www.youtube.com/watch?v=k81mLJVX08w&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=27
+
+  avoid select *
+ 
+  a list of adivces, difficult to understand without examples for those of us
+  with little experience with SQL and/or BigQuery
+
+
++ 3.2.2 Internals of BigQuery
+  https://www.youtube.com/watch?v=eduHi1inM4s&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=28
+
+  Basically leart that somehow execution and storage are separated in BigQuery,
+  and that when BigQuery is going to process a query, it is divided into smaller
+  chunks, which get executed separately for speed, and later joined together to
+  obain the final result.
+
++ 3.3.1 BigQuery Machine Learning
+  https://www.youtube.com/watch?v=B-WtpB0PuG4&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=29
+
+  See example queries for this part in file big_query_ml.sql of
+  dezoomcamp-code/week_3_data_warehouse
+  
+  Documentation at: https://cloud.google.com/bigquery-ml/docs
+
+  He built a simple linear regression model (similar to what we did in the first
+  days of the ML-Zoomcamp course, but with BigQuery)
+
++ 3.3.2 BigQuery Machine Learning Deployment
+  https://www.youtube.com/watch?v=BjARzEWaznU&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=30
+
+  How to export and Deploy the model as a Docker image.
+
+  See extract_model.md in dezoomcamp-code/week_3_data_warehouse
+
+  gcloud auth login works fine
+  bq is not in the path, but rather in /opt/google-cloud-sdk/bin
+  
+  (these were installed by AUR package google-cloud-sdk)
+
+  The stuff he uses to test the Docker image with the model is Postman:
+  https://www.postman.com/
+
+

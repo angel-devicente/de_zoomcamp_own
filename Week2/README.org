@@ -1,4 +1,4 @@
-All material for Week #1 is at:
+All material for Week #2 is at:
 https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_2_workflow_orchestration
 
 + (2.1.1) Data Lake (GCS)
