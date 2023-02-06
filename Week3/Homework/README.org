@@ -1,4 +1,4 @@
-This is not for this year, but to get an idea of the type of questions for this week:
+Homework at
 https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2023/week_3_data_warehouse/homework.md
 
 Based on last week's code, I run =python etl_web_to_gcs.py= to upload all the
