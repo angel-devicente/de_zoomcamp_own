@@ -1,4 +1,79 @@
 This is not for this year, but to get an idea of the type of questions for this week:
+https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/cohorts/2023/week_3_data_warehouse/homework.md
 
-https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_3_data_warehouse/homework.md
+Based on last week's code, I run =python etl_web_to_gcs.py= to upload all the
+data from 2019 in GCS.
 
+
+Create the 2019 external table with:
+#+begin_example
+CREATE OR REPLACE EXTERNAL TABLE `de-zoomcamp-375218.de_zoomcamp.external_fhv_tripdata`
+OPTIONS (                                                                       
+  format = 'CSV',                                                               
+  uris = ['gs://de-zoomcamp-gcs/data/fhv/fhv_tripdata_2019-*.csv.gz']
+);     
+#+end_example
+
+Create the materialized 2019 table with:
+#+begin_example
+CREATE OR REPLACE TABLE `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata` AS  
+SELECT * FROM `de-zoomcamp-375218.de_zoomcamp.external_fhv_tripdata`;    
+#+end_example
+
++ Q1
+  #+begin_example
+  SELECT count(*) from `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata`;    
+  #+end_example
+
+  --> 43244696
+
++ Q2
+
+  #+begin_example
+  -- Estimated size for external table: OMB
+  SELECT COUNT(DISTINCT affiliated_base_number) as affiliated_base_numbers  
+  FROM `de-zoomcamp-375218.de_zoomcamp.external_fhv_tripdata`;
+
+  -- Estimated size for materialized table: 317.94MB
+  SELECT COUNT(DISTINCT affiliated_base_number) as affiliated_base_numbers  
+  FROM `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata`;
+  #+end_example
+
++ Q3
+  #+begin_example
+  SELECT COUNT(*) from `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata` 
+  where PUlocationID is NULL and DOlocationID is NULL;
+  #+end_example
+
+  --> 717748   
+
++ Q4
+
+  --> Partition by pickup_datetime Cluster on affiliated_base_number
+
++ Q5
+  
+  #+begin_example
+  CREATE OR REPLACE TABLE `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata_pc`
+  PARTITION BY DATE(pickup_datetime)                                         
+  CLUSTER BY affiliated_base_number AS                                                        
+  SELECT * FROM `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata`;
+
+  -- Estimated query size 647.87MB 
+  SELECT COUNT(DISTINCT affiliated_base_number) as affiliated_base_numbers  
+  FROM `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata`
+  WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2019-03-31';
+
+  -- Estimated query size 23.05MB
+  SELECT COUNT(DISTINCT affiliated_base_number) as affiliated_base_numbers  
+  FROM `de-zoomcamp-375218.de_zoomcamp.fhv_tripdata_pc`
+  WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2019-03-31';
+  #+end_example
+
++ Q6
+
+  --> GCP Bucket
+
++ Q7
+  
+  --> False
