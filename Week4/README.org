@@ -1,2 +1,68 @@
 All materials for Week #4 are at:
 
++ 4.1.1 Analytics Engineering Basics
+
+  Analytics Engineers: somehwere between data engineers (who take care of the data
+  infrastructure) and data analysts (who use the data to answer business/science
+  questions). 
+
+  Data loading -> data storing -> data modelling -> data presentation.
+
+  In this week we'll look at dbt (data modelling) and data presentation.
+
+  Data modelling concepts: ELT vs ETL
+   Kimball' Dimensional modelling
+   Elements of Dimensional modeling
+   Architecture of Dimensional modeling (stage area, precessing area, presentation
+   area) 
+ 
++ 4.1.2 What is dbt
+
+  stands for Data build tool (transformation tool going from SQL to analytics code
+  following software engineerin best practices)
+
+  Basically we will write some SQL code, that dbt will compile and push back to
+  the warehouse, creating a persistent derived model of our data, that we can
+  later use.
+
+  How to use dbt?
+  + dbt Core
+    + open source
+  + dbt Cloud
+    + Saas application to develop and manage dbt projects
+    + Web-based IDE, et.
+    + Free for individuals
+
+  How are we going to use dbt?
+  + BigQuery: development using cloud IDE
+  + Postgres: local installation
+
++ 4.2.1 Start your dbt Projcet: BigQuery and dbt cloud (Alternative A)
+
++ Create a new dbt project
+  + dbt starter project repo: https://github.com/dbt-labs/dbt-starter-project
+
+  + if using dbt locally, dbt init would clone the repo above so that we start
+    with a template
+  + if using dbt cloud, we would get it by starting a new project in the
+    web-based IDE
+
+The videos don't show some basic steps (how to create a dbt cloud account,
+etc. For that, check the following info:
+https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_4_analytics_engineering
+
++ 4.2.2 Start your dbt Projcet: Postgres and dbt
+
++ 4.3.1 Build the First dbt models
+
++ 4.3.2 Testing and documenting the project
+
++ 4.4.1 Deployment using dbt cloud 
+
++ 4.4.2 Deployment using dbt locally
+
++ 4.5.1 Visualizing the data with Google Data Sudio
+
++ 4.5.2 Visualizing the data with Metabase
+
+
